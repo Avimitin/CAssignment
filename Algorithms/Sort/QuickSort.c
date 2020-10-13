@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+extern void QuickSort(int lenth, int *a);
+
+void exch(int a[], int i, int j) {
+    int item = a[i];
+    a[i] = a[j];
+    a[j] = item;
+}
+
+int Partition(int a[], int lo, int hi) {
+    int i = lo; int j = hi + 1;
+    int v = a[lo];
+    while (1) { 
+        while (a[++i] < v) {
+            if (i == hi) {
+                break;
+            }
+        }
+        while (a[--j] > v) {
+            if (j == lo) {
+                break;
+            }
+        }
+        if (i >= j) { break; }
+        exch(a, i, j);
+    }
+    exch(a, lo, j);
+    return j;
+}
+
+void sort(int  a[], int lo, int hi) {
+    if (hi <= lo) { return; }
+    int j = Partition(a, lo, hi);
+    sort(a, lo, j-1);
+    sort(a, j+1, hi);
+}
+
+void QuickSort(int lenth, int *a) {
+    sort(a, 0, lenth-1);
+}
