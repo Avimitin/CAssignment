@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 void Show(int len, int *a);
-void ShellSort(int length, int *array);
+void QuickSort(int length, int *array);
 
 int main(int argc, char *argv[]) {
     // Check input;
@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
     Show(argc-1, a);
     
     // Print input after sort;
-    ShellSort(argc-1, a);
+    QuickSort(argc-1, a);
     printf("After sort: ");
     Show(argc-1, a);
 
