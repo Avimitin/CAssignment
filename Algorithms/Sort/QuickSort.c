@@ -3,11 +3,7 @@
 
 extern void QuickSort(int lenth, int *a);
 
-void exch(int a[], int i, int j) {
-    int item = a[i];
-    a[i] = a[j];
-    a[j] = item;
-}
+void Exch(int *i, int *j);
 
 int Partition(int a[], int lo, int hi) {
     int i = lo; int j = hi + 1;
@@ -24,9 +20,9 @@ int Partition(int a[], int lo, int hi) {
             }
         }
         if (i >= j) { break; }
-        exch(a, i, j);
+        Exch(a+i, a+j);
     }
-    exch(a, lo, j);
+    Exch(a+lo, a+j);
     return j;
 }
 
