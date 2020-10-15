@@ -4,7 +4,7 @@
 int *aux;
 extern void MergeSort(int length, int *a);
 
-void Merge(int a[], int lo, int mid, int hi) {
+extern void Merge(int a[], int lo, int mid, int hi) {
     int i = lo;
     int j = mid+1;
 
@@ -29,7 +29,7 @@ void Sort(int a[], int lo, int hi) {
     Merge(a, lo, mid, hi);
 }
 
-void Init(int length) {
+void UDInit(int length) {
     aux = calloc(length, sizeof(int));
     if (aux == NULL) {
         fprintf(stderr, "array init fail.");
@@ -38,7 +38,7 @@ void Init(int length) {
 }
 
 void MergeSort(int length, int *a) {
-    Init(length);
+    UDInit(length);
     Sort(a, 0, length-1);
     free(aux);
 }

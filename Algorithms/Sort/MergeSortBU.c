@@ -4,21 +4,7 @@
 int *aux;
 extern void MergeSortBU(int length, int *a);
 
-void Merge(int a[], int lo, int mid, int hi) {
-    int i = lo;
-    int j = mid+1;
-
-    for (int k=lo; k <= hi; k++) {
-        aux[k] = a[k];
-    }
-    
-    for (int k=lo; k <= hi; k++) {
-        if      (i > mid)           { a[k] = aux[j++]; }
-        else if (j > hi)            { a[k] = aux[i++]; }
-        else if (aux[i] > aux[j])   { a[k] = aux[j++]; } 
-        else                        { a[k] = aux[i++]; }
-    }
-}
+void Merge(int a[], int lo, int mid, int hi);
 
 // main sort methods;
 // Imagine a array that split to many child array. And finally merge them.
@@ -36,7 +22,7 @@ void sort(int length, int a[]) {
     }
 }
 
-void Init(int length) {
+void BUInit(int length) {
     aux = calloc(length, sizeof(int));
     if (aux == NULL) {
         fprintf(stderr, "array init fail.");
@@ -45,7 +31,7 @@ void Init(int length) {
 }
 
 void MergeSortBU(int length, int *a) {
-    Init(length);
+    BUInit(length);
     sort(length, a);
     free(aux);
 }

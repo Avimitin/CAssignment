@@ -26,13 +26,13 @@ int Partition(int a[], int lo, int hi) {
     return j;
 }
 
-void sort(int  a[], int lo, int hi) {
+void _quick_sort(int  a[], int lo, int hi) {
     if (hi <= lo) { return; }
     int j = Partition(a, lo, hi);
-    sort(a, lo, j-1);
-    sort(a, j+1, hi);
+    _quick_sort(a, lo, j-1);
+    _quick_sort(a, j+1, hi);
 }
 
 void QuickSort(int lenth, int *a) {
-    sort(a, 0, lenth-1);
+    _quick_sort(a, 0, lenth-1);
 }
