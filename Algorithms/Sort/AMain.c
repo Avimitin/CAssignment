@@ -60,7 +60,7 @@ int main(int argc, char *argv[]) {
 
     // Select one method to sort;
     char *existMethod[] = {"insert", "mergebu", "mergeud", "quick", "selection", "shell"};
-    printf("Select a sort method: insert/mergebu/mergeud/quick/selection/shell :");
+    printf("Select a sort method: insert/mergebu/mergeud/quick/selection/shell: ");
     SortMethod = calloc(10, sizeof(char));
     scanf("%s", SortMethod);
     int isValid = 0;
@@ -77,12 +77,13 @@ int main(int argc, char *argv[]) {
     }
     
     // sort and count time
+    printf("Sorting...\n");
     Start();
     MainSort(argc-1, a);
     double end = During();
     
     // Print sorted input or not?
-    printf("Sort Done. Do you want to print the sorted input? [Y/n]");
+    printf("Sort Done. \nDo you want to print the sorted input? [Y/n] ");
     char NeedPrint;
     while (NeedPrint == '\n' || NeedPrint == '\0') {
         NeedPrint = getchar();
