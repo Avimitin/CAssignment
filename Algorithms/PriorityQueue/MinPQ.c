@@ -85,7 +85,7 @@ int main(int argc, char *argv[]) {
 
     printf("Args you input: ");
     for (int i = 0; i < len; i++) {
-        a[i] = *argv[i+1] - '0';
+        a[i] = atoi(argv[i]);
         printf("%d ", a[i]);
     }
     printf("\n");
