@@ -3,6 +3,8 @@
 
 void Show(int len, int *a);
 void QuickSort(int length, int *array);
+void Start();
+double During();
 
 int main(int argc, char *argv[]) {
     // Check input;
@@ -32,10 +34,14 @@ int main(int argc, char *argv[]) {
         exit(-1);
     }
     
+    // count time
+    Start();
     // Print input after sort;
     QuickSort(argc-1, a);
+    double end = During();
     printf("After sort: ");
     Show(argc-1, a);
+    printf("Exact sorting time: %f s\n", end);
 
     // Exit;
     return 0;
