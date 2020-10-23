@@ -1,26 +1,26 @@
 #include <stdio.h>
 
-struct ValType
+typedef struct ValType
 {
     int ValVal;
-};
+}ValType;
 
-struct KeyType
+typedef struct KeyType
 {
     char *KeyVal;
-};
+}KeyType;
 
 // NodeStruct
 struct NodeType
 {
-    struct KeyType *Key;
-    struct ValType *Val;
+    KeyType *Key;
+    ValType *Val;
     struct NodeType *Next;
 };
 
-struct NodeType * NewNode(char* key, int val, NodeType *next) {
-    struct KeyType k = { key };
-    struct ValType v = { val };
+struct NodeType * NewNode(char* key, int val, struct NodeType *next) {
+    KeyType k = { key };
+    ValType v = { val };
     struct NodeType n = {
         Key: &k,
         Val: &v,
@@ -28,3 +28,10 @@ struct NodeType * NewNode(char* key, int val, NodeType *next) {
     };
     return &n;
 }
+
+typedef struct ArrayHeader
+{
+    void *data;
+    int len;
+    int cap;
+}Array;
