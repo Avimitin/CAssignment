@@ -18,7 +18,7 @@ struct NodeType
     struct NodeType *Next;
 };
 
-struct NodeType * NewNode(char* key, int val, struct NodeType *next) {
+struct NodeType * NewNodeType(char* key, int val, struct NodeType *next) {
     KeyType k = { key };
     ValType v = { val };
     struct NodeType n = {
