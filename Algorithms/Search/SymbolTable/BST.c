@@ -62,8 +62,7 @@ node * put(node *x, char *key, int val) {
 	return x;
 }
 
-// Delete min using circulation
-node * DelMinCir() {
+node * MinCir() {
 	if (root->left == NULL) {
 		return root;
 	}
@@ -74,28 +73,58 @@ node * DelMinCir() {
 	return x;
 }
 
-node * DelMinRec(node *x) {
+node * MinRec(node *x) {
 	if (x->left == NULL) {
 		return x;
 	} else {
-		return DelMinRec(x);
+		return MinRec(x);
 	}
 }
 
 char * Min() {
-	return DelMinRec(root)->key->KeyVal;
+	return MinRec(root)->key->KeyVal;
 }
 
-node * Floor(node *x, char *key) {
+node * MaxRec(node *x) {
+	if (x->right == NULL) {
+		return x;
+	} else {
+		return MaxRec(x);
+	}
+}
+
+char * Max() {
+	return MaxRec(root)->key->KeyVal;
+}
+
+node * floor(node *x, char *key) {
 	if (x == NULL) {
 		return x;
 	}
 	int cmp = strcmp(key, x->key->KeyVal);
+	if (cmp == 0) {
+		return x;
+	}
 	if (cmp < 0) {
-		Floor(x->left, key);
+		floor(x->left, key);
+	}
+}
+
+node * Floor(char *key) {
+	return floor(root, key);
+} 
+
+node * ceiling(node *x, char *key) {
+	if (x == NULL) {
+		return x;
+	}
+	int cmp = strcmp(x->key->KeyVal, key);
+	if (cmp < 0) {
+		ceiling(x->right, key);
 	} else if (cmp > 0) {
-		Floor(x->right, key);
+		ceiling(x->left, key);
 	} else {
 		return x;
 	}
 }
+

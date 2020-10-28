@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 typedef struct ValType
 {
@@ -11,22 +13,21 @@ typedef struct KeyType
 }KeyType;
 
 // NodeStruct
-struct NodeType
+typedef struct NodeType
 {
     KeyType *Key;
     ValType *Val;
-    struct NodeType *Next;
-};
+    NodeType *Next;
+}NodeType;
 
 struct NodeType * NewNodeType(char* key, int val, struct NodeType *next) {
-    KeyType k = { key };
-    ValType v = { val };
-    struct NodeType n = {
-        Key: &k,
-        Val: &v,
-        Next: next
-    };
-    return &n;
+    NodeType* n = (NodeType*)malloc(1, sizeof(NodeType));
+    n->Key = (KeyType*)malloc(1, sizeof(KeyType));
+    n->Val = (ValType*)malloc(1, sizeof(ValType));
+    n->Key->KeyVal = strdup(key);
+    n->Val->ValVal = val;
+    n->Next = next;
+    return n;
 }
 
 typedef struct ArrayHeader
