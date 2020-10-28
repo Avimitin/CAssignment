@@ -11,9 +11,13 @@ typedef struct node {
 }node;
 
 node * NewNode(char *key, int val, int N) {
-	KeyType *k = {key};
-	ValType *v = {val};
-	node *n = {k, v, N};
+	KeyType k = {.KeyVal=key};
+	ValType v = {.ValVal=val};
+	node *n = (node*)calloc(1, sizeof(node));
+	n->key = (struct KeyType*)calloc(1, sizeof(struct KeyType));
+	n->val = (struct ValType*)calloc(1, sizeof(struct ValType));
+	n->key = k;
+	n->val = v;
 	return n;
 }
 
@@ -31,22 +35,18 @@ int Size() {
 	return size(root);
 }
 
-int Get(char *key) {
-	get(root, key);
-}
-
 int get(node *n, char *key) {
 	if (n == NULL) {
-		return NULL;
+		return ;
     }
     int cmp = strcmp(n->key->KeyVal, key);
-	if (cmp > 0) {getVal(n->left, key);}
-	else if (cmp < 0) {getVal(n->right, key);}
+	if (cmp > 0) {get(n->left, key);}
+	else if (cmp < 0) {get(n->right, key);}
 	else return n->val->ValVal; 
 }
 
-void Put(char *key, int val) {
-	root = put(root, key, val);
+int Get(char *key) {
+    get(root, key);
 }
 
 node * put(node *x, char *key, int val) {
@@ -60,6 +60,10 @@ node * put(node *x, char *key, int val) {
 	// x's left size plus right size plus itself.
 	x->N = size(x->left) + size(x->right) + 1;
 	return x;
+}
+
+void Put(char *key, int val) {
+    root = put(root, key, val);
 }
 
 node * MinCir() {
@@ -97,29 +101,34 @@ char * Max() {
 	return MaxRec(root)->key->KeyVal;
 }
 
-node * floor(node *x, char *key) {
+// if the given key is lower than given node, that the biggest node
+// which is lower than given key MUST in the left child tree.
+// Else only if there are node in the right child tree which is lower than given key.
+// Else the target is the given root node.
+node * floorNode(node *x, char *key) {
 	if (x == NULL) {
-		return x;
+		return NULL;
 	}
 	int cmp = strcmp(key, x->key->KeyVal);
 	if (cmp == 0) {
 		return x;
 	}
 	if (cmp < 0) {
-		floor(x->left, key);
+		floorNode(x->left, key);
 	}
+	node *t = floorNode(x->right, key);
+	if (t != NULL) { return t; }
+	else return x;
 }
 
 node * Floor(char *key) {
-	return floor(root, key);
+	return floorNode(root, key);
 } 
 
 node * ceiling(node *x, char *key) {
-	if (x == NULL) {
-		return x;
-	}
+	if (x == NULL) { return x; }
 	int cmp = strcmp(x->key->KeyVal, key);
-	if (cmp < 0) {
+	if (cmp > 0) {
 		ceiling(x->right, key);
 	} else if (cmp > 0) {
 		ceiling(x->left, key);
@@ -127,4 +136,3 @@ node * ceiling(node *x, char *key) {
 		return x;
 	}
 }
-
