@@ -24,7 +24,7 @@ struct NodeType * NewNodeType(char* key, int val, struct NodeType *next) {
     NodeType* n = (NodeType*)malloc(1, sizeof(NodeType));
     n->Key = (KeyType*)malloc(1, sizeof(KeyType));
     n->Val = (ValType*)malloc(1, sizeof(ValType));
-    n->Key->KeyVal = strdup(key);
+    n->Key->KeyVal = _strdup(key);
     n->Val->ValVal = val;
     n->Next = next;
     return n;
