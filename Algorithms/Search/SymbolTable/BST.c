@@ -125,14 +125,28 @@ node * Floor(char *key) {
 	return floorNode(root, key);
 } 
 
+// The target of ceiling is to get a node which is
+// minimum but bigger than the given key.
 node * ceiling(node *x, char *key) {
 	if (x == NULL) { return x; }
 	int cmp = strcmp(x->key->KeyVal, key);
-	if (cmp > 0) {
-		ceiling(x->right, key);
-	} else if (cmp > 0) {
-		ceiling(x->left, key);
-	} else {
-		return x;
+	if (cmp == 0) {
+	    return x;
 	}
+	if (cmp > 0) {
+	    return ceiling(x->left, key);
+	}
+	node* t = ceiling(x->right, key);
+	if (t != NULL) { return t; }
+	else return x;
+}
+
+node * Select(node* x, int k) {
+    if (x->left->N > k) {
+        Select(x->left, k);
+    } else if (x->left->N == k) {
+       return x;
+    } else {
+        Select(x->right, k-t-1);
+    }
 }
