@@ -226,3 +226,28 @@ void print(node *x) {
 void Print() {
     print(root)
 }
+
+struct KeyList {
+    int len;
+    int cap;
+    struct KeyType *KeyList;
+};
+
+struct KeyList *NewKeyList(int cap) {
+    struct KeyList *k = (struct KeyList *) calloc(1, sizeof(struct KeyList));
+    k->KeyList = (struct KeyType *) calloc(cap, sizof(struct KeyType));
+    k->cap = cap;
+}
+
+void Enlarge(struct KeyList *k) {
+    k->KeyList = realloc(k->KeyList, k->cap*2 * sizeof(KeyType));
+    k->cap = k->cap*2;
+}
+
+void Enqueue(struct KeyList *k, char *key) {
+    if (k->len*2 >= cap) {
+        Enlarge(k);
+    }
+    k->KeyList[++k->len].KeyVal = strdup(key);
+
+}
