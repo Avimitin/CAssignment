@@ -14,20 +14,20 @@ void Put(char *key, int val) {
             return;
         }
         // Here will add all the new node to the front.
-        first = NewNode(key, val, n);
+        first = NewNodeType(key, val, n);
         size++;
     }
 }
 
 // Get will return related value with given key. If the given key is not 
 // exist, this will return null value.
-int Get(char *key) {
+ValType *Get(char *key) {
     for (NodeType *n = first; n != NULL; n = n->Next) {
         if (strcmp(key, n->Key->KeyVal)) {
-            return n -> Val -> ValVal;
+            return n -> Val;
         }
     }
-    return NULL;
+	return NULL;
 }
 
 // Size will return how many key and value combination in list.

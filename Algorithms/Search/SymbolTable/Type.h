@@ -17,14 +17,14 @@ typedef struct NodeType
 {
     KeyType *Key;
     ValType *Val;
-    NodeType *Next;
+    struct NodeType *Next;
 }NodeType;
 
 struct NodeType * NewNodeType(char* key, int val, struct NodeType *next) {
-    NodeType* n = (NodeType*)malloc(1, sizeof(NodeType));
-    n->Key = (KeyType*)malloc(1, sizeof(KeyType));
-    n->Val = (ValType*)malloc(1, sizeof(ValType));
-    n->Key->KeyVal = _strdup(key);
+    NodeType* n = (NodeType*)calloc(1, sizeof(NodeType));
+    n->Key = (KeyType*)calloc(1, sizeof(KeyType));
+    n->Val = (ValType*)calloc(1, sizeof(ValType));
+    n->Key->KeyVal = strdup(key);
     n->Val->ValVal = val;
     n->Next = next;
     return n;
