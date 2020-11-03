@@ -4,8 +4,8 @@
 
 typedef struct node {
     int N;
-    node *left;
-    node *right;
+    struct node *left;
+    struct node *right;
     KeyType *key;
     ValType *val;
 } node;
@@ -16,8 +16,8 @@ node *NewNode(char *key, int val, int N) {
     node *n = (node *) calloc(1, sizeof(node));
     n->key = (struct KeyType *) calloc(1, sizeof(struct KeyType));
     n->val = (struct ValType *) calloc(1, sizeof(struct ValType));
-    n->key = k;
-    n->val = v;
+    *n->key = k;
+    *n->val = v;
     return n;
 }
 
@@ -37,7 +37,7 @@ int Size() {
 
 int get(node *n, char *key) {
     if (n == NULL) {
-        return;
+        return 0;
     }
     int cmp = strcmp(n->key->KeyVal, key);
     if (cmp > 0) { get(n->left, key); }
@@ -46,7 +46,7 @@ int get(node *n, char *key) {
 }
 
 int Get(char *key) {
-    get(root, key);
+    return get(root, key);
 }
 
 node *put(node *x, char *key, int val) {
@@ -143,11 +143,11 @@ node *ceiling(node *x, char *key) {
 
 node *Select(node *x, int k) {
     if (x->left->N > k) {
-        Select(x->left, k);
+        return Select(x->left, k);
     } else if (x->left->N == k) {
         return x;
     } else {
-        Select(x->right, k - t - 1);
+        return Select(x->right, k - x->left->N - 1);
     }
 }
 
@@ -175,6 +175,7 @@ node *delMin(node *x) {
     free(x->left);
     x->left = x->right;
     x->right = NULL;
+	return x;
 }
 
 node *DelMin() {
@@ -189,6 +190,7 @@ node *delMax(node *x) {
     free(x->right);
     x->right = x->left;
     x->left = NULL;
+	return x;
 }
 
 node *DelMax() {
@@ -224,7 +226,7 @@ void print(node *x) {
 }
 
 void Print() {
-    print(root)
+    print(root);
 }
 
 struct KeyList {
@@ -235,8 +237,9 @@ struct KeyList {
 
 struct KeyList *NewKeyList(int cap) {
     struct KeyList *k = (struct KeyList *) calloc(1, sizeof(struct KeyList));
-    k->KeyList = (struct KeyType *) calloc(cap, sizof(struct KeyType));
+    k->KeyList = (struct KeyType *) calloc(cap, sizeof(struct KeyType));
     k->cap = cap;
+	return k;
 }
 
 void Enlarge(struct KeyList *k) {
@@ -245,9 +248,12 @@ void Enlarge(struct KeyList *k) {
 }
 
 void Enqueue(struct KeyList *k, char *key) {
-    if (k->len*2 >= cap) {
+    if (k->len*2 >= k->cap) {
         Enlarge(k);
     }
     k->KeyList[++k->len].KeyVal = strdup(key);
+}
 
+void DeQueue(struct KeyList *k) {
+	
 }
