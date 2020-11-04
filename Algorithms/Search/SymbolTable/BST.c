@@ -51,11 +51,11 @@ int Get(char *key) {
 
 node *put(node *x, char *key, int val) {
 	if (x == NULL) {
-		NewNode(key, val, 1);
+		return NewNode(key, val, 1);
 	}
 	int cmp = strcmp(x->key->KeyVal, key);
-	if (cmp < 0) { put(x->right, key, val); }
-	else if (cmp > 0) { put(x->left, key, val); }
+	if (cmp < 0)      { x->right = put(x->right, key, val); }
+	else if (cmp > 0) { x->left = put(x->left, key, val); }
 	else x->val->ValVal = val;
 	// x's left size plus right size plus itself.
 	x->N = size(x->left) + size(x->right) + 1;
@@ -202,10 +202,10 @@ node *delete(node *x, char *key) {
 		return NULL;
 	}
 	int cmp = strcmp(x->key->KeyVal, key);
-	if (cmp > 0) { x->left = delete(x->left, key); }
-	else if (cmp < 0) { x->right = delete(x->right, key); }
-	else {
-		if (x->left == NULL) { return x->right; }
+	if (cmp > 0)              { x->left = delete(x->left, key); }
+	else if (cmp < 0)         { x->right = delete(x->right, key); }
+	else                      {
+		if (x->left == NULL)  { return x->right; }
 		if (x->right == NULL) { return x->left; }
 		node *t = x;
 		x = MinRec(t->right);
@@ -221,7 +221,7 @@ void print(node *x) {
 		return;
 	}
 	print(x->left);
-	printf("%s", x->key->KeyVal);
+	printf("%s, %d\n", x->key->KeyVal, x->val->ValVal);
 	print(x->right);
 }
 
@@ -281,4 +281,18 @@ KeyType *Keys(KeyType lo, KeyType hi) {
 	struct KeyQueue *q = NewKeyList(10);
 	keys(root, q, lo, hi);
 	return q->Queue;
+}
+
+int main(int argc, char *argv[])
+{
+	if (argc < 2)
+	{
+		return -1;
+	}
+	for (int i = 1; i < argc; i++)
+	{
+		Put(argv[i], i);
+	}
+	Print();
+	return 0;
 }
